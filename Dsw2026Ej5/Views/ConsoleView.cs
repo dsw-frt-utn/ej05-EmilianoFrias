@@ -27,6 +27,7 @@ public class ConsoleView
             else if (opcion == "2")
             {
                 Console.WriteLine("Agregando vehículo...");
+                Console.ReadLine();
             }
         }
         while (opcion != "3");
@@ -55,11 +56,12 @@ public class ConsoleView
 
     public static void DibujarLinea()
     {
-        var with = Console.WindowWidth;
-        for (int i = 0; i < with; i++)
+        int width = Console.WindowWidth;
+        for (int i = 0; i < width; i++)
         {
             Console.Write("-");
         }
+        Console.WriteLine();
     }
 
     private static void ListarVehiculos()
@@ -67,10 +69,10 @@ public class ConsoleView
         LimpiarPantalla();
         string[] columnas = { "Patente", "Vehículo", "Tipo", "Cap. Carga", "Km/l", "Año", "L.Extra", "Kms a recorrer" };
         DibujarEncabezado(columnas);
-        DibjuarDatos(columnas.Length);
+        DibujarDatos(columnas.Length);
         DibujarLinea();
         Console.Write("\n");
-        Console.Write("\n");
+        Console.WriteLine();
         Console.WriteLine("Presione una tecla para calcular el total de consumos...");
         Console.ReadLine();
         Dictionary<string, double> vehiculos = new Dictionary<string, double>();
@@ -80,10 +82,10 @@ public class ConsoleView
         }
         (double, double) totalConsumos = Controlador.CalcularConsumos(vehiculos);
         DibujarLinea();
-        Console.WriteLine($"Total consumo Vehículos Eléctricos: {totalConsumos.Item1} kWh");
-        Console.WriteLine($"Total consumo Vehículos Combustible: {totalConsumos.Item2} Litros");
+        Console.WriteLine($"Total consumo Vehículos Eléctricos: {totalConsumos.Item1:F2} kWh");
+        Console.WriteLine($"Total consumo Vehículos Combustible: {totalConsumos.Item2:F2} Litros");
         DibujarLinea();
-        Console.Write("\n");
+        Console.WriteLine();
         Console.Write("\n");
         Console.WriteLine("Presione una tecla para salir...");
         Console.ReadLine();
@@ -102,10 +104,10 @@ public class ConsoleView
         Console.Write("\n");
         DibujarLinea();
     }
-    private static void DibjuarDatos(int columnas)
+    private static void DibujarDatos(int columnas)
     {
         int ancho = Console.WindowWidth / columnas;
-        foreach (var vehiculo in _vehiculos)
+        foreach (VehiculoViewModel vehiculo in _vehiculos)
         {
             Console.Write("|");
             CentrarTexto(vehiculo.GetPatente(), out int l, ancho - 1, false);
